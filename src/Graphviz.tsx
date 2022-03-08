@@ -51,12 +51,15 @@ class Graphviz extends React.Component<IGraphvizProps, any> {
 
   private renderGraph = () => {
     const { dot, options } = this.props;
-    graphviz(`#${this.id}`)
+    const graphv = graphviz(`#${this.id}`)
       .options({
         ...Graphviz.defaultOptions,
-        ...options || {},
+        ...(options || {}),
       })
       .renderDot(dot);
+    if (options.end) {
+      graphv.on('end', options.end);
+    }
   };
 }
 
