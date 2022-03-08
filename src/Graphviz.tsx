@@ -15,6 +15,8 @@ interface IGraphvizProps {
    * The classname to attach to this component for styling purposes.
    */
   className?: string;
+
+  end(): void;
 }
 class Graphviz extends React.Component<IGraphvizProps, any> {
   private static count = 0;
@@ -50,15 +52,15 @@ class Graphviz extends React.Component<IGraphvizProps, any> {
   };
 
   private renderGraph = () => {
-    const { dot, options } = this.props;
+    const { dot, options, end } = this.props;
     const graphv = graphviz(`#${this.id}`)
       .options({
         ...Graphviz.defaultOptions,
         ...(options || {}),
       })
       .renderDot(dot);
-    if (options.end) {
-      graphv.on('end', options.end);
+    if (end) {
+      graphv.on('end', end);
     }
   };
 }
